@@ -1,0 +1,61 @@
+# Core web framework
+flask>=3.0,<4.0
+flask-cors>=4.0,<5.0
+gunicorn>=21.2,<23.0
+werkzeug>=3.0,<4.0
+python-dotenv>=1.0,<2.0
+
+# Database
+pymongo>=4.6,<5.0
+
+# Authentication
+bcrypt>=4.1,<5.0
+PyJWT>=2.8.0,<3.0.0
+
+# Audio/Signal processing
+librosa>=0.10,<1.0
+soundfile>=0.12,<1.0
+sounddevice>=0.4,<1.0
+resampy>=0.4,<1.0
+scipy>=1.11,<2.0
+numpy>=1.26,<2.0
+
+# ML / NLP
+spacy>=3.7,<3.9
+nltk>=3.8,<4.0
+torch>=2.1,<3.0
+torchaudio>=2.1,<3.0
+transformers>=4.36,<5.0
+accelerate>=1.0,<2.0
+
+# IndicConformer model via HuggingFace transformers
+onnxruntime==1.20.1
+onnx==1.20.1
+huggingface_hub>=0.20,<1.0
+
+# Transcription / Whisper
+tgt>=1.4,<2.0
+
+# Text analysis
+python-Levenshtein>=0.25,<1.0
+inflect>=7.0,<8.0
+
+# API / External services
+replicate>=1.0,<2.0
+boto3>=1.28,<2.0
+google-auth>=2.20,<3.0
+
+# Video processing
+ffmpeg-python>=0.2,<1.0
+
+# Visualization
+matplotlib>=3.7,<4.0
+seaborn>=0.13,<1.0
+
+# Computer Vision / Video Analysis
+mediapipe==0.10.14
+opencv-python-headless>=4.8,<5.0
+
+# Misc
+requests>=2.31,<3.0
+python-dateutil>=2.8,<3.0

@@ -1,0 +1,49 @@
+services:
+  backend:
+    build:
+      context: ./Stutter-detection-backend-main
+      dockerfile: Dockerfile
+    container_name: stutter-detection-backend
+    ports:
+      - "10000:10000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=True
+      - PYTHONUNBUFFERED=1
+      - FLASK_APP=app:app
+    volumes:
+      # Mount code for live reload - no rebuild needed for code changes!
+      - ./Stutter-detection-backend-main:/app
+      - ./Stutter-detection-backend-main/uploads:/app/uploads
+      - ./Stutter-detection-backend-main/analysis_results:/app/analysis_results
+      - ./Stutter-detection-backend-main/profile_pictures:/app/profile_pictures
+    networks:
+      - stutter-network
+    restart: unless-stopped
+    expose:
+      - "10000"
+    # Use Flask dev server with auto-reload instead of gunicorn
+    command: ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=10000", "--reload"]
+
+  frontend:
+    build:
+      context: ./Stutter-Detection-Frontend-main
+      dockerfile: Dockerfile.dev
+    container_name: stutter-detection-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_BASE_URL=http://localhost:10000
+    volumes:
+      # Mount code for live reload - no rebuild needed!
+      - ./Stutter-Detection-Frontend-main:/app
+      - /app/node_modules  # Don't override node_modules
+    networks:
+      - stutter-network
+    restart: unless-stopped
+
+networks:
+  stutter-network:
+    driver: bridge
