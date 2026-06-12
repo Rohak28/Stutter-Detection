@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./Stutter-detection-backend-main
+      dockerfile: Dockerfile
+    container_name: stutter-detection-backend
+    ports:
+      - "10000:10000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_DEBUG=False
+      - PYTHONUNBUFFERED=1
+      - FLASK_APP=app:app
+    volumes:
+      - ./Stutter-detection-backend-main/uploads:/app/uploads
+      - ./Stutter-detection-backend-main/analysis_results:/app/analysis_results
+    networks:
+      - stutter-network
+    restart: unless-stopped
+    expose:
+      - "10000"
+
+  frontend:
+    build:
+      context: ./Stutter-Detection-Frontend-main
+      dockerfile: Dockerfile
+    container_name: stutter-detection-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=http://backend:10000
+      - REACT_APP_ENV=production
+    networks:
+      - stutter-network
+    restart: unless-stopped
+    expose:
+      - "80"
+
+networks:
+  stutter-network:
+    driver: bridge
